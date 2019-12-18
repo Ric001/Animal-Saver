@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "org.animal.savers.App",
+            "projectName": "AnimalSaversApp"
+        }
+    ]
+}

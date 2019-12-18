@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import org.lookup.service.constants.DBLinks;
 import org.lookup.service.constants.Provider;
+import org.lookup.service.utils.Strings;
 
 public class LookupService implements ILookupService {
 
@@ -23,11 +24,13 @@ public class LookupService implements ILookupService {
     private String conectionString;
     private String host;
     private String port;
+    private Properties props;
+    private String driverName;
 
     private final static Logger LOG = Logger.getLogger(LookupService.class.getName());
 
     public LookupService(Optional<String> configRoute, Optional<Provider> dbEngineProvider) {
-        if (Objects.nonNull(configRoute) && configRoute.isPresent())
+        if (Strings.isNullOrEmpty(configRoute))
             configurationRoute = configRoute.get();
         if (Objects.nonNull(dbEngineProvider) && dbEngineProvider.isPresent())
             setLinkProvider(dbEngineProvider.get());
@@ -38,7 +41,8 @@ public class LookupService implements ILookupService {
     public String connectionString() {
         LOG.info("[ENTERING String connectionString()]");
         final StringBuilder builder = new StringBuilder();
-        builder.append(connectionLink).append(host).append(port).append(db).append(username).append(password);
+        builder.append(connectionLink).append(host).append(":").append(port).append("/").append(db).append("/?user=")
+                .append(username).append("&password=").append(password);
         conectionString = builder.toString();
         LOG.info(String.format("[RETURNING FROM String connectionString(): %s]", conectionString));
         return conectionString;
@@ -64,8 +68,8 @@ public class LookupService implements ILookupService {
         InputStream in = null;
         try {
             in = new FileInputStream(new File(configRoute));
-            final Properties properties = new Properties();
-            properties.load(in);
+            dbConfigProps.load(in);
+            props = dbConfigProps;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -79,11 +83,32 @@ public class LookupService implements ILookupService {
         }
         return dbConfigProps;
     }
-    
+
     public void loadFromProperties(final Properties properties) {
         LOG.info("[ENTERING void loadFromProperties(final Properties properties)]");
         if (!properties.isEmpty()) {
-            
+            db = properties.getProperty("db");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+            host = properties.getProperty("host");
+            port = properties.getProperty("port");
+            driverName = properties.getProperty("driver");
         }
+    }
+
+    @Override
+    public Properties props() {
+        LOG.info("[RETURNING FROM Properties props()]");
+        return props;
+    }
+
+    @Override
+    public String url() {
+        LOG.info("[ENTERING ON String url()]");
+        StringBuilder builder = new StringBuilder();
+        builder.append(connectionLink.toString()).append(host).append(":").append(port).append("/").append(db)
+                .append("/");
+        LOG.info(String.format("[RETURNING FROM String url(): %s]", builder.toString()));
+        return builder.toString();
     }
 }

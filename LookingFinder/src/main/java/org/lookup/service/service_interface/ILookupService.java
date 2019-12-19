@@ -9,4 +9,6 @@ public interface ILookupService {
     Properties props();
     
     String url();
+
+    String driverVendorName();
 }

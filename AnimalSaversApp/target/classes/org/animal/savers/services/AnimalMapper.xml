@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.animal.savers.AnimalMapper">
+    <select id="toListPets" parameterType="int" resultType="org.animal.savers.Animal">
+        SELECT * FROM PET
+    </select>
+
+    <select id="toList" parameterType="int" resultType="org.animal.savers.Animal">
+      SELECT * FROM PET WHERE PET.AnimalID = #{id}
+    </select>
+
+    <insert id="addAnimal" parameterType="org.animal.savers.Animal" useGeneratedKeys="true"> 
+      INSERT INTO PET (NAME, OWNER, SPECIES, SEX, BIRTH)
+        VALUES (#{name}, #{owner}, #{species}, #{sex}, #{birth})
+    </insert>
+
+    <update id="editAnimal">
+      UPDATE PET SET
+        NAME = #{name},
+        OWNER = #{owner},
+        SPECIES = #{species},
+        SEX = #{sex},
+        BIRTH = #{birth}
+        WHERE PET.AnimalID = #{id}
+    </update>
+
+    <delete id="deleteAnimal">
+      DELETE FROM PET WHERE PET.AnimalID = #{id}
+    </delete>
+</mapper>

@@ -34,20 +34,10 @@ public class LookupService implements ILookupService {
             configurationRoute = configRoute.get();
         if (Objects.nonNull(dbEngineProvider) && dbEngineProvider.isPresent())
             setLinkProvider(dbEngineProvider.get());
-        loadFromProperties(loadDataByRoute(configurationRoute));
+         loadFromProperties(loadDataByRoute(configurationRoute));
     }
 
-    @Override
-    public String connectionString() {
-        LOG.info("[ENTERING String connectionString()]");
-        final StringBuilder builder = new StringBuilder();
-        builder.append(connectionLink).append(host).append(":").append(port).append("/").append(db).append("/?user=")
-                .append(username).append("&password=").append(password);
-        conectionString = builder.toString();
-        LOG.info(String.format("[RETURNING FROM String connectionString(): %s]", conectionString));
-        return conectionString;
-    }
-
+    
     public void setLinkProvider(Provider provider) {
         LOG.info("[ENTERING void setLinkProvider(Provider provider)]");
         if (Objects.isNull(provider))
@@ -97,6 +87,18 @@ public class LookupService implements ILookupService {
     }
 
     @Override
+    public String connectionString() {
+        LOG.info("[ENTERING String connectionString()]");
+        final StringBuilder builder = new StringBuilder();
+        builder.append(connectionLink).append(host).append(":").append(port).append("/").append(db).append("/?user=")
+                .append(username).append("&password=").append(password);
+        conectionString = builder.toString();
+        LOG.info(String.format("[RETURNING FROM String connectionString(): %s]", conectionString));
+        return conectionString;
+    }
+
+
+    @Override
     public Properties props() {
         LOG.info("[RETURNING FROM Properties props()]");
         return props;
@@ -110,5 +112,11 @@ public class LookupService implements ILookupService {
                 .append("/");
         LOG.info(String.format("[RETURNING FROM String url(): %s]", builder.toString()));
         return builder.toString();
+    }
+
+    @Override
+    public String driverVendorName() {
+        LOG.info(String.format("[ENTERING ON driverVendorName() : %s]", driverName));
+        return driverName;
     }
 }

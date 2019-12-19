@@ -14,10 +14,12 @@ public class App {
         try {
             configRoute = Optional.of(new File("db.properties").getCanonicalPath());
             final Optional<Provider> providers = Optional.of(Provider.MY_SQL);
-            ILookupService lookupService = new LookupServiceFactory().lookupService(configRoute, providers);
-            System.out.println(lookupService.connectionString());
+            final ILookupService lookupService = new LookupServiceFactory().lookupService(configRoute, providers);
+            System.out.println("{PROPERTIES -> " + lookupService.props() + "}");
+            System.out.println("{Connection String -> " + lookupService.connectionString() + "}");
+            System.out.println("{URL -> " + lookupService.url() + "}");
+            System.out.println("{Driver Name -> " + lookupService.driverVendorName() + "}");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
       

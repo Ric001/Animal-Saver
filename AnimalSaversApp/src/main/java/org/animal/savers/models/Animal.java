@@ -1,10 +1,10 @@
-package org.animal.savers;
+package org.animal.savers.models;
 
 import java.time.LocalDate;
 
 public class Animal {
 
-    //private int animalId;
+    private int animalId;
     private String name;
     private String owner;
     private String species;
@@ -17,7 +17,7 @@ public class Animal {
 
     public Animal(int animalId, String name, String saver, String species, String sex, LocalDate birth,
             LocalDate death) {
-        //this.animalId = animalId;
+        this.animalId = animalId;
         this.name = name;
         this.owner = saver;
         this.species = species;
@@ -26,13 +26,13 @@ public class Animal {
         this.death = death;
     }
 
-    /*public int getAnimalId() {
+    public int getAnimalId() {
         return animalId;
     }
 
     public void setAnimalId(int animalId) {
         this.animalId = animalId;
-    }*/
+    }
 
     public String getName() {
         return name;
@@ -82,10 +82,19 @@ public class Animal {
         this.death = death;
     }
 
+    
     @Override
     public String toString() {
         return "Animal [ birth=" + birth + ", death=" + death + ", name=" + name + ", saver="
                 + owner + ", sex=" + sex + ", species=" + species + "]";
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
     
 }

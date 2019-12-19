@@ -14,7 +14,10 @@
       </dataSource>
     </environment>
   </environments>
+  <databaseIdProvider type="DB_VENDOR">
+    <property name="MySQL" value="mysql" /> 
+  </databaseIdProvider>
   <mappers>
-    <mapper  class="org.animal.savers.AnimalMapper" />
+    <mapper  class="org.animal.savers.AnimalMapper"/>
   </mappers>
 </configuration>

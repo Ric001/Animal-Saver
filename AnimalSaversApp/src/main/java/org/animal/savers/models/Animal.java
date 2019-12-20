@@ -26,6 +26,8 @@ public class Animal {
         this.death = death;
     }
 
+    
+
     public int getAnimalId() {
         return animalId;
     }
@@ -96,5 +98,24 @@ public class Animal {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
+    public Animal(String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
+        this.name = name;
+        this.owner = owner;
+        this.species = species;
+        this.sex = sex;
+        this.birth = birth;
+        this.death = death;
+    }
+
+    public Animal(String name, String owner, String species, String sex, LocalDate birth) {
+        this.name = name;
+        this.owner = owner;
+        this.species = species;
+        this.sex = sex;
+        this.birth = birth;
+    }
+
+    
     
 }

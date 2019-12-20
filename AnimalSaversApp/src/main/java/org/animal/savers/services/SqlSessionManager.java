@@ -13,14 +13,14 @@ import org.lookup.service.utils.Strings;
 
 public class SqlSessionManager {
 
-    private static SqlSessionFactory sqlSessionFactory;
+    private SqlSessionFactory sqlSessionFactory;
     private static SqlSessionManager manager;
     private static final Logger LOG = Logger.getLogger(SqlSessionManager.class.getName());
     
     private SqlSessionManager() {
     }
 
-    public static SqlSession openSession(String route) {
+    public SqlSession openSession(String route) {
         LOG.info("[ENTERING SqlSession openSession(String route)]");
         if (Objects.isNull(sqlSessionFactory) && !Strings.isNullOrEmpty(route)) {
             try {
@@ -39,9 +39,12 @@ public class SqlSessionManager {
         return manager;
     }
 
-    private static SqlSessionFactory getSqlSessionFactory(String route) throws FileNotFoundException {
+    private SqlSessionFactory getSqlSessionFactory(String route) throws FileNotFoundException {
+        LOG.info("[ENTERING SqlSessionFactory getSqlSessionFactory(String route)]");
         final FileInputStream configFile = new FileInputStream(new File(route));
         final SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+
+        LOG.info(String.format("[RETURNING FROM SqlSessionFactory getSqlSessionFactory(String route): %s]", builder));
         return builder.build(configFile);
     }
 

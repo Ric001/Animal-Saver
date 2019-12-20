@@ -18,6 +18,6 @@
     <property name="MySQL" value="mysql" /> 
   </databaseIdProvider>
   <mappers>
-    <mapper  class="org.animal.savers.AnimalMapper"/>
+    <mapper  class="org.animal.savers.services.AnimalMapper"/>
   </mappers>
 </configuration>

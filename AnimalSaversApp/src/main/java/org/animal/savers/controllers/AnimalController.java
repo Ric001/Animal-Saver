@@ -22,8 +22,9 @@ public class AnimalController implements AnimalMapper {
         LOG.info("[ENTERING List<Animal> toListPets()]");
 
         final List<Animal> pets = dbAccessor.getMapper(AnimalMapper.class).toListPets();
-
+        finishOperation();
         LOG.info(String.format("[RETURING FROM List<Animal> toListPets(): %s]", pets));
+        
         return pets;
     }
 
@@ -34,7 +35,7 @@ public class AnimalController implements AnimalMapper {
             return null;
 
         final Animal animal = dbAccessor.getMapper(AnimalMapper.class).getAnimalById(id);
-
+        finishOperation();
         LOG.info(String.format("[RETURNING FROM Animal getAnimalById(Integer id): %s]", animal));
         return animal;
 
@@ -43,20 +44,28 @@ public class AnimalController implements AnimalMapper {
     @Override
     public void addAnimal(Animal animal) {
         LOG.info("[ADDING %s To The PET Entity]");
-        if (Objects.nonNull(animal))
+        if (Objects.nonNull(animal)) {
             dbAccessor.getMapper(AnimalMapper.class).addAnimal(animal);
+            finishOperation();
+        }
     }
 
     @Override
     public void editAnimal(Animal animal) {
         LOG.info("[EDITING %s animal]");
         dbAccessor.getMapper(AnimalMapper.class).editAnimal(animal);
+        finishOperation();
     }
 
     @Override
     public void deleteAnimal(Integer animal) {
         LOG.info("[DELETING %s animal]");
         dbAccessor.getMapper(AnimalMapper.class).deleteAnimal(animal);
+        finishOperation();
     }
 
+
+    private void finishOperation() {
+        dbAccessor.commit();
+    }
 }

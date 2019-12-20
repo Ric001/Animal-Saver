@@ -3,16 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.animal.savers.AnimalMapper">
-    <select id="toListPets" parameterType="int" resultType="org.animal.savers.Animal">
+<mapper namespace="org.animal.savers.services.AnimalMapper">
+    <select id="toListPets" parameterType="int" resultType="org.animal.savers.models.Animal">
         SELECT * FROM PET
     </select>
 
-    <select id="toList" parameterType="int" resultType="org.animal.savers.Animal">
-      SELECT * FROM PET WHERE PET.AnimalID = #{id}
+    <select id="getAnimalById" parameterType="int" resultType="org.animal.savers.models.Animal">
+      SELECT * FROM PET WHERE PET.AnimalID = #{animalId}
     </select>
 
-    <insert id="addAnimal" parameterType="org.animal.savers.Animal" useGeneratedKeys="true"> 
+    <insert id="addAnimal" parameterType="org.animal.savers.models.Animal" useGeneratedKeys="true"> 
       INSERT INTO PET (NAME, OWNER, SPECIES, SEX, BIRTH)
         VALUES (#{name}, #{owner}, #{species}, #{sex}, #{birth})
     </insert>
@@ -24,7 +24,7 @@
         SPECIES = #{species},
         SEX = #{sex},
         BIRTH = #{birth}
-        WHERE PET.AnimalID = #{id}
+        WHERE PET.AnimalID = #{animalId}
     </update>
 
     <delete id="deleteAnimal">
